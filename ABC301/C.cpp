@@ -1,0 +1,84 @@
+#include<iostream>
+#include<vector>
+#include<cmath>
+#include<numeric>
+#include<string>
+#include<algorithm>
+#include<map>
+#include<set>
+#include<queue>
+#include<deque>
+#include<iomanip>
+using namespace std;
+
+# define rep(i,n) for(i=0; i<n; i++)
+void yes() {
+	cout << "Yes" << endl;
+}
+void no() {
+	cout << "No" << endl;
+}
+void vec_h(vector<long long> a) {
+	int n = a.size(), i;
+	rep(i, n) {
+		if (i) cout << ' ';
+		cout << a[i];
+	}
+	cout << endl;
+}
+void vec_v(vector<long long> a) {
+	for (auto c : a) {
+		cout << c << endl;
+	}
+}
+
+int main() {
+	long long n, m, i, j, k, h, w, x, y, ans, cur, res, jud, mod;
+	string s, t;
+	cin >> s >> t;
+	n = s.size();
+	cur = 0; res = 0;
+	vector<long long> cnt(26, 0);
+	rep(i, n) {
+		if (s[i] == '@') {
+			cur++;
+		}
+		else {
+			cnt[s[i] - 'a']++;
+		}
+	}
+	rep(i, n) {
+		if (t[i] == '@') {
+			res++;
+		}
+		else {
+			cnt[t[i] - 'a']--;
+		}
+	}
+	rep(j, 26) {
+		jud = 'a' + j;
+		if (jud == 'a' || jud == 't' || jud == 'c' || jud == 'o' || jud == 'd' || jud == 'e' || jud == 'r') {
+			if (cnt[j] > 0) {
+				res -= cnt[j];
+				if (res < 0) {
+					no();
+					return 0;
+				}
+			}
+			else if (cnt[j] < 0) {
+				cur -= -(cnt[j]);
+				if (cur < 0) {
+					no();
+					return 0;
+				}
+			}
+		}
+		else {
+			if (cnt[j] != 0) {
+				no();
+				return 0;
+			}
+		}
+	}
+	yes();
+}
